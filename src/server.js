@@ -1,52 +1,59 @@
+const dotenv = require('dotenv');
+dotenv.config();
+const path = require('path');
+
 const express = require('express');
 const app = express();
-const models = require('./models/post')
-const bodyParser = require('body-parser')
-const promBundle = require("express-prom-bundle");
+const models = require('./models/post');
+const bodyParser = require('body-parser');
+const promBundle = require('express-prom-bundle');
 const config = require('./system-life');
-const middlewares = require('./middleware')
+const middlewares = require('./middleware');
 
 const metricsMiddleware = promBundle({
-    includeMethod: true, 
-    includePath: true, 
-    includeStatusCode: true, 
-    includeUp: true,
-    promClient: {
-        collectDefaultMetrics: {
-        }
-      }
+  includeMethod: true,
+  includePath: true,
+  includeStatusCode: true,
+  includeUp: true,
+  promClient: {
+    collectDefaultMetrics: {
+    },
+  },
 });
 
-app.use(middlewares.countRequests)
-app.use(metricsMiddleware)
+app.use(middlewares.countRequests);
+app.use(metricsMiddleware);
 app.use(config.middlewares.healthMid);
 app.use('/', config.routers);
-app.use(express.static('static'));
-app.use(bodyParser.urlencoded({ extended: false }))
+app.use(express.static(path.join(__dirname, 'static')));
+app.use(bodyParser.urlencoded({extended: false}));
+app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
 
 app.get('/post', (req, res) => {
-    res.render('edit-news');
+  res.render('edit-news');
 });
 
 app.post('/post', (req, res) => {
+  models.Post.create({
+    title: req.body.title,
+    content: req.body.description,
+    summary: req.body.resumo, publishDate: Date.now(),
+  });
 
-    models.Post.create({title: req.body.title, content: req.body.description, summary: req.body.resumo, publishDate: Date.now()});
-    res.redirect('/');
+  res.redirect('/');
 });
 
 app.get('/post/:id', async (req, res) => {
-
-    const post = await models.Post.findByPk(req.params.id);
-    res.render('view-news',{post: post});
+  const post = await models.Post.findByPk(req.params.id);
+  res.render('view-news', {post: post});
 });
 
 
 app.get('/', async (req, res) => {
-
-    const posts = await models.Post.findAll();
-    res.render('index',{posts: posts});
+  const posts = await models.Post.findAll();
+  res.render('index', {posts: posts});
 });
 
 models.initDatabase();
