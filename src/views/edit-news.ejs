@@ -48,8 +48,7 @@
                 <div class="col-12">
                   <label for="title" class="form-label">Título: <span class="text-muted"></span></label>
                   <input type="text" class="form-control" id="title" name="title" placeholder="Título da Notícia"
-                    pattern=".{1,30}"
-                    required>
+                    pattern=".{1,30}" required>
                   <div class="invalid-feedback">
                     Esse campo é obrigatório e deve ter no máximo 30 caracteres
                   </div>
@@ -57,8 +56,7 @@
                 <div class="col-12">
                   <label for="resumo" class="form-label">Resumo: <span class="text-muted"></span></label>
                   <input type="text" class="form-control" id="resumo" name="resumo" placeholder="Resumo da Notícia"
-                    pattern=".{1,100}"
-                    required>
+                    pattern=".{1,100}" required>
                   <div class="invalid-feedback">
                     Esse campo é obrigatório e deve ter no máximo 50 caracteres
                   </div>
@@ -80,7 +78,7 @@
     </div>
 
     <%- include('./partial/bootstrap-js'); %>
-    <script src="/assets/dist/js/form-validation.js"></script>
+      <script src="/assets/dist/js/form-validation.js"></script>
 </body>
 
 </html>

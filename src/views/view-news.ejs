@@ -37,28 +37,28 @@
 
   <%- include('./partial/nav-bar'); %>
 
-  <div class="container">
-    <main>
-      <div class="py-3 text-center">
-        <h2>
-          <%= post.title %>
-        </h2>
-      </div>
-      <div class="row g-5">
-        <div class="col-md-12 col-lg-12">
-          <div class="row g-3">
-            <p>
-            <p class="lead">
-              <%- post.content %>
-            </p>
-            </p>
+    <div class="container">
+      <main>
+        <div class="py-3 text-center">
+          <h2>
+            <%= post.title %>
+          </h2>
+        </div>
+        <div class="row g-5">
+          <div class="col-md-12 col-lg-12">
+            <div class="row g-3">
+              <p>
+              <p class="lead">
+                <%- post.content %>
+              </p>
+              </p>
+            </div>
           </div>
         </div>
-      </div>
-    </main>
-  </div>
+      </main>
+    </div>
 
-  <%- include('./partial/bootstrap-js'); %>
+    <%- include('./partial/bootstrap-js'); %>
 </body>
 
 </html>
